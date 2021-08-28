@@ -3,8 +3,10 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Creates new form MaiinWindow
      */
+    Repertorium rep = new Repertorium();
     public MainWindow() {
         initComponents();
+        rep.fillRepertorium1(jTable1, "");
     }
 
     /**
@@ -27,7 +29,11 @@ public class MainWindow extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         repertoriumPanel = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        zrealPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        zrealTable = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         klienciPanel = new javax.swing.JPanel();
@@ -39,6 +45,7 @@ public class MainWindow extends javax.swing.JFrame {
         backgroundPanel.setBackground(new java.awt.Color(204, 204, 204));
 
         sidebar.setBackground(new java.awt.Color(54, 33, 89));
+        sidebar.setPreferredSize(new java.awt.Dimension(250, 240));
 
         repertoriumButton.setBackground(new java.awt.Color(85, 65, 118));
         repertoriumButton.setPreferredSize(new java.awt.Dimension(227, 50));
@@ -63,7 +70,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                 .addContainerGap())
         );
         repertoriumButtonLayout.setVerticalGroup(
@@ -116,8 +123,8 @@ public class MainWindow extends javax.swing.JFrame {
         sidebar.setLayout(sidebarLayout);
         sidebarLayout.setHorizontalGroup(
             sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(repertoriumButton, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-            .addComponent(klienciButton, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+            .addComponent(repertoriumButton, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(klienciButton, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
         );
         sidebarLayout.setVerticalGroup(
             sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,39 +137,96 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         jLayeredPane1.setBackground(new java.awt.Color(0, 255, 255));
-        jLayeredPane1.setPreferredSize(new java.awt.Dimension(1021, 650));
+        jLayeredPane1.setPreferredSize(new java.awt.Dimension(950, 650));
 
-        repertoriumPanel.setPreferredSize(new java.awt.Dimension(1021, 650));
+        repertoriumPanel.setPreferredSize(new java.awt.Dimension(950, 650));
 
         jPanel3.setBackground(new java.awt.Color(51, 153, 255));
+        jPanel3.setPreferredSize(new java.awt.Dimension(950, 650));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Numer repertorium", "Numer aktu", "Strony", "Krótki opis", "Kwota bruttol"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(1).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(4).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(4).setMaxWidth(100);
+        }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         repertoriumPanel.addTab("Poczekalnia", jPanel3);
 
-        jPanel2.setBackground(new java.awt.Color(153, 255, 102));
+        zrealPanel.setBackground(new java.awt.Color(153, 255, 102));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        zrealTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Numer repertorium", "Numer aktu", "Strony", "Krótki opis", "Kwota bruttol"
+            }
+        ));
+        jScrollPane2.setViewportView(zrealTable);
+        if (zrealTable.getColumnModel().getColumnCount() > 0) {
+            zrealTable.getColumnModel().getColumn(0).setMinWidth(100);
+            zrealTable.getColumnModel().getColumn(0).setMaxWidth(100);
+            zrealTable.getColumnModel().getColumn(1).setMinWidth(100);
+            zrealTable.getColumnModel().getColumn(1).setMaxWidth(100);
+            zrealTable.getColumnModel().getColumn(2).setPreferredWidth(50);
+            zrealTable.getColumnModel().getColumn(3).setPreferredWidth(50);
+            zrealTable.getColumnModel().getColumn(4).setMinWidth(100);
+            zrealTable.getColumnModel().getColumn(4).setMaxWidth(100);
+        }
+
+        javax.swing.GroupLayout zrealPanelLayout = new javax.swing.GroupLayout(zrealPanel);
+        zrealPanel.setLayout(zrealPanelLayout);
+        zrealPanelLayout.setHorizontalGroup(
+            zrealPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 945, Short.MAX_VALUE)
+            .addGroup(zrealPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(zrealPanelLayout.createSequentialGroup()
+                    .addGap(7, 7, 7)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        zrealPanelLayout.setVerticalGroup(
+            zrealPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 622, Short.MAX_VALUE)
+            .addGroup(zrealPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(zrealPanelLayout.createSequentialGroup()
+                    .addGap(58, 58, 58)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(49, Short.MAX_VALUE)))
         );
 
-        repertoriumPanel.addTab("Zrealizowane", jPanel2);
+        repertoriumPanel.addTab("Zrealizowane", zrealPanel);
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 153));
 
@@ -170,7 +234,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1016, Short.MAX_VALUE)
+            .addGap(0, 945, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +249,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1016, Short.MAX_VALUE)
+            .addGap(0, 945, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +259,7 @@ public class MainWindow extends javax.swing.JFrame {
         repertoriumPanel.addTab("tab4", jPanel6);
 
         klienciPanel.setBackground(new java.awt.Color(0, 51, 51));
-        klienciPanel.setPreferredSize(new java.awt.Dimension(1021, 650));
+        klienciPanel.setPreferredSize(new java.awt.Dimension(950, 650));
 
         javax.swing.GroupLayout klienciPanelLayout = new javax.swing.GroupLayout(klienciPanel);
         klienciPanel.setLayout(klienciPanelLayout);
@@ -205,7 +269,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         klienciPanelLayout.setVerticalGroup(
             klienciPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+            .addGap(0, 660, Short.MAX_VALUE)
         );
 
         jLayeredPane1.setLayer(repertoriumPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -223,7 +287,7 @@ public class MainWindow extends javax.swing.JFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(repertoriumPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(klienciPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(klienciPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
@@ -237,8 +301,8 @@ public class MainWindow extends javax.swing.JFrame {
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -309,14 +373,18 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JPanel klienciButton;
     private javax.swing.JPanel klienciPanel;
     private javax.swing.JPanel repertoriumButton;
     private javax.swing.JTabbedPane repertoriumPanel;
     private javax.swing.JPanel sidebar;
+    private javax.swing.JPanel zrealPanel;
+    private javax.swing.JTable zrealTable;
     // End of variables declaration//GEN-END:variables
 }
