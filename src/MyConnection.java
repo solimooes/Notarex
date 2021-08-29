@@ -10,7 +10,7 @@ public class MyConnection {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/dawid test";
+            String url = "jdbc:mysql://localhost:3306/notarex db";
             String login = "root";
             String password = "";
             con = DriverManager.getConnection(url, login, password);

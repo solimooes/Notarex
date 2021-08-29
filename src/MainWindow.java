@@ -7,6 +7,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         rep.fillRepertorium1(jTable1, "");
+        rep.fillRepertorium2(zrealTable, "");
     }
 
     /**
