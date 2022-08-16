@@ -1,20 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author Dawid
- */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.RowId;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+
 public class AddingCustWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form AddingCustWindow
      */
+    Client cli = new Client();
+    
+    int idAktu;
+
     public AddingCustWindow() {
         initComponents();
+        cli.fillKlienciAll(jTable1, "", 2);
+        cli.fillKlientDoAkt(jTable2, idAktu);
+        // hideColumn(4);
+    }
+
+    private void hideColumn(int colIndex) {
+        TableColumn col = jTable1.getColumnModel().getColumn(colIndex);
+        col.setMaxWidth(0);
+        col.setMinWidth(0);
+        col.setPreferredWidth(0);
+
     }
 
     /**
@@ -33,8 +50,10 @@ public class AddingCustWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jTextFieldNazwisko = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -85,6 +104,11 @@ public class AddingCustWindow extends javax.swing.JFrame {
 
         setMinimumSize(new java.awt.Dimension(1200, 700));
         setPreferredSize(new java.awt.Dimension(1200, 700));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1206, 800));
 
@@ -95,10 +119,33 @@ public class AddingCustWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nazwisko", "Imię", "Nazwa"
+                "Id", "Imię i Nazwisko", "Nazwa"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(40);
+        }
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Szukaj:");
@@ -109,9 +156,45 @@ public class AddingCustWindow extends javax.swing.JFrame {
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jTextField2.setText("jTextField1");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        jButton1.setText("Dodaj klienta");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Usuń klienta");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Lp.", "Strona czynności"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setMaxWidth(40);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -127,25 +210,37 @@ public class AddingCustWindow extends javax.swing.JFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(59, 59, 59)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                        .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)))
+                        .addComponent(jButton2)
+                        .addGap(71, 71, 71))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dadwanie osoby", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dodawanie osoby", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
 
         jTextFieldNazwisko.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
 
@@ -213,6 +308,11 @@ public class AddingCustWindow extends javax.swing.JFrame {
         jTextFieldNrDok.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
 
         jComboBoxRodzDok.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dowód osobisty", "Paszport", "Item 3", "Item 4" }));
+        jComboBoxRodzDok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxRodzDokActionPerformed(evt);
+            }
+        });
 
         jTextFieldUlica.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
 
@@ -571,17 +671,17 @@ public class AddingCustWindow extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonAddClient1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonAddClient)
                 .addGap(381, 381, 381))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -601,7 +701,7 @@ public class AddingCustWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1214, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1249, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -667,38 +767,60 @@ public class AddingCustWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldImieActionPerformed
 
+    private boolean verifyText() {
+        if (jTextFieldImie.getText().equals("") || jTextFieldNazwisko.getText().equals("") || jTextFieldNazwa.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Wypełnij Imię i nazwisko klienta, bądź nazwę firmy!");
+            return false;
+        } else if ((jTextFieldImie.getText().equals("") || jTextFieldNazwisko.getText().equals("")) && jTextFieldNazwa.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Uzupełnij dane klienta");
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
     private void jButtonAddClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddClientActionPerformed
         //Po wciśnięciu buttona "dodaj klienta
-       
-       String nazwisko =jTextFieldNazwisko.getText();
-       String imie1 = jTextFieldImie.getText();
-       String imie2 = jTextFieldImie2.getText();
-       String nazwa = jTextFieldNazwa.getText();
-      // int pesel = Integer.parseInt(jTextFieldPesel.getText());
-       int pesel = Integer.valueOf(jTextFieldPesel.getText());
-       String nip = jTextFieldNip.getText();
-       int regon = Integer.parseInt(jTextFieldRegon.getText());
-       String rodzaj_dok_toz = jComboBoxRodzDok.getSelectedItem().toString();
-       String nr_dok_toz = jTextFieldNrDok.getText();
-       String ulica = jTextFieldUlica.getText();
-       int nr_domu = Integer.parseInt(jTextFieldNrDomu.getText());   
-       int nr_lokalu = Integer.parseInt(jTextFieldNrLokalu.getText());
-       String kod_pocztowy = jTextFieldKodPocztowy.getText();  
-       String miejscowosc = jTextFieldMiejscowosc.getText();  
-       String kraj = jTextFieldKraj.getText(); 
-       //String numer_konta = jTextFieldNrKonta.getText();  
-       int numer_konta = Integer.parseInt(jTextFieldNrKonta.getText());  
-       String nr_rej_sadow = jTextFieldNrRejestruSad.getText();  
-       String nr_swift = jTextFieldSwift.getText();  
-       String mail = jTextFieldMail.getText();  
-       String telefon = jTextFieldTelefon.getText();  
-       String fax = jTextFieldFax.getText();  
-       
-       
-       Client Cli = new Client ();
-       Cli.insUpdDelClient('i', null, nazwisko, imie1, imie2, nazwa, pesel, nip, regon, rodzaj_dok_toz, nr_dok_toz, ulica, nr_domu, nr_lokalu,kod_pocztowy, miejscowosc, kraj, numer_konta,nr_rej_sadow, nr_swift, mail, telefon, fax);
-       //Cli.insUpdDelClient('i', null, nazwisko, imie1, imie2);
-        // TODO add your handling code here:
+
+        String nazwisko = jTextFieldNazwisko.getText();
+        String imie1 = jTextFieldImie.getText();
+        String imie2 = jTextFieldImie2.getText();
+        String nazwa = jTextFieldNazwa.getText();
+        // int pesel = Integer.parseInt(jTextFieldPesel.getText());
+        //int pesel = Integer.valueOf(jTextFieldPesel.getText()); zamieniam na stringa 
+        String pesel = jTextFieldPesel.getText();
+        String nip = jTextFieldNip.getText();
+        //int regon = Integer.parseInt(jTextFieldRegon.getText());
+        String regon = jTextFieldRegon.getText();
+        String rodzaj_dok_toz = jComboBoxRodzDok.getSelectedItem().toString();
+        String nr_dok_toz = jTextFieldNrDok.getText();
+        String ulica = jTextFieldUlica.getText();
+        //int nr_domu = Integer.parseInt(jTextFieldNrDomu.getText());
+        String nr_domu = jTextFieldNrDomu.getText();
+        //int nr_lokalu = Integer.parseInt(jTextFieldNrLokalu.getText());
+        String nr_lokalu = jTextFieldNrLokalu.getText();
+        String kod_pocztowy = jTextFieldKodPocztowy.getText();
+        String miejscowosc = jTextFieldMiejscowosc.getText();
+        String kraj = jTextFieldKraj.getText();
+        String numer_konta = jTextFieldNrKonta.getText();
+        //String numer_konta = Integer.parseInt(jTextFieldNrKonta.getText());
+        String nr_rej_sadow = jTextFieldNrRejestruSad.getText();
+        String nr_swift = jTextFieldSwift.getText();
+        String mail = jTextFieldMail.getText();
+        String telefon = jTextFieldTelefon.getText();
+        String fax = jTextFieldFax.getText();
+        String rodzDok = jComboBoxRodzDok.getSelectedItem().toString();
+
+        if (verifyText()) {
+            Client Cli = new Client();
+            Cli.insUpdDelClient('i', null, nazwisko, imie1, imie2, nazwa, pesel, nip, regon, rodzaj_dok_toz, nr_dok_toz, ulica, nr_domu, nr_lokalu, kod_pocztowy, miejscowosc, kraj, numer_konta, nr_rej_sadow, nr_swift, mail, telefon, fax);
+            //Cli.insUpdDelClient('i', null, nazwisko, imie1, imie2);
+            // TODO add your handling code here:
+            cli.fillKlienciAll(jTable1, "", 2);
+        }
+
+
     }//GEN-LAST:event_jButtonAddClientActionPerformed
 
     private void jTextFieldRegonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRegonActionPerformed
@@ -712,6 +834,106 @@ public class AddingCustWindow extends javax.swing.JFrame {
     private void jTextFieldImie2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldImie2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldImie2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+//        int rowIndex = jTable1.getSelectedRow();
+//        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+//        
+//        int idKlienta;
+//        //idKlienta = Integer.valueOf(model.getValueAt(rowIndex,0));
+//        idKlienta = (int) model.getValueAt(rowIndex,0);
+//        
+
+//
+//            ResultSet rs = ps.executeQuery();
+//            DefaultTableModel model = (DefaultTableModel) table.getModel();
+//
+//            Object[] row;
+//
+//            while (rs.next()) {
+//                row = new Object[5];
+//                row[0] = rs.getInt(1);
+//                row[1] = rs.getString(2);
+//                row[2] = rs.getString(3);
+//                //row[1] = rs.getString(3);
+//                //row[3] = rs.getString(7);
+//
+//                model.addRow(row);
+        //      }
+        // jTextFieldPesel.setText(idKlienta);
+//        jTextFieldNazwisko.setText(model.getValueAt(rowIndex, 0).toString());
+//        jTextFieldPesel.setText(model.getValueAt(rowIndex, 3).toString());
+        //row[3] = rs.getString(7);
+        /*
+        String imie1 = jTextFieldImie.getText();
+        String imie2 = jTextFieldImie2.getText();
+        String nazwa = jTextFieldNazwa.getText();
+        // int pesel = Integer.parseInt(jTextFieldPesel.getText());
+        //int pesel = Integer.valueOf(jTextFieldPesel.getText()); zamieniam na stringa 
+        String pesel = jTextFieldPesel.getText();
+        String nip = jTextFieldNip.getText();
+        //int regon = Integer.parseInt(jTextFieldRegon.getText());
+        String regon = jTextFieldRegon.getText();
+        String rodzaj_dok_toz = jComboBoxRodzDok.getSelectedItem().toString();
+        String nr_dok_toz = jTextFieldNrDok.getText();
+        String ulica = jTextFieldUlica.getText();
+        //int nr_domu = Integer.parseInt(jTextFieldNrDomu.getText());
+        String nr_domu = jTextFieldNrDomu.getText();
+        //int nr_lokalu = Integer.parseInt(jTextFieldNrLokalu.getText());
+        String nr_lokalu = jTextFieldNrLokalu.getText();
+        String kod_pocztowy = jTextFieldKodPocztowy.getText();
+        String miejscowosc = jTextFieldMiejscowosc.getText();
+        String kraj = jTextFieldKraj.getText();
+        String numer_konta = jTextFieldNrKonta.getText();
+        //String numer_konta = Integer.parseInt(jTextFieldNrKonta.getText());
+        String nr_rej_sadow = jTextFieldNrRejestruSad.getText();
+        String nr_swift = jTextFieldSwift.getText();
+        String mail = jTextFieldMail.getText();
+        String telefon = jTextFieldTelefon.getText();
+        String fax = jTextFieldFax.getText();*/
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    //usuwanie klienta z aktu 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int id_aktu = 0;
+        int rowIndex = jTable2.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        int idKlienta;
+//       idKlienta = (int) model.getValueAt(rowIndex, 0);
+
+        //idKlienta = Integer.parseInt((String) model.getValueAt(rowIndex, 0)); 
+        idKlienta = (int) model.getValueAt(rowIndex, 0);
+        cli.deleteKlientDoAkt(idKlienta, idAktu);
+        jTable2.setModel(new DefaultTableModel(null, new Object[]{"Lp.", "Strona czynności"}));
+        cli.fillKlientDoAkt(jTable2, idAktu);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    //dodawanie klienta do danego aktu 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int rowIndex = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int idKlienta;
+        idKlienta = (int) model.getValueAt(rowIndex, 0);
+
+        cli.insertKlientDoAkt(idKlienta, idAktu);
+        jTable2.setModel(new DefaultTableModel(null, new Object[]{"Lp.", "Strona czynności"}));
+        cli.fillKlientDoAkt(jTable2, idAktu);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jComboBoxRodzDokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxRodzDokActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxRodzDokActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        //zamykanie okna
+//        AddingRepWindow  arw = new AddingRepWindow();
+//        arw. jTable20.setModel(new DefaultTableModel(null, new Object[]{"Id klienta", "Imię nazwisko nazwa", "PESEL/NIP", "Adres"}));
+//        cli.fillKlientDoAkt(jTable20, idAktu);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -749,6 +971,8 @@ public class AddingCustWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAddClient;
     private javax.swing.JButton jButtonAddClient1;
     private javax.swing.JComboBox<String> jComboBoxRodzDok;
@@ -780,9 +1004,9 @@ public class AddingCustWindow extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextFieldFax;
