@@ -13,6 +13,7 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         //rep.fillRepertorium1(jTable1, ""); // do usuniecoa
         //rep.fillRepertorium2(zrealTable, ""); // funkcja do zmiany
+        rep.fillRepertorium2(zrealTable, "");
         rep.fillRepertorium1(roboczeTable, "");
         cli.fillKlienciAll(klienciTable, "", 1);
         zrealizowanePanel.setVisible(true);
@@ -43,9 +44,7 @@ public class MainWindow extends javax.swing.JFrame {
         zrealizowanePanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        roboczeTable2 = new javax.swing.JTable();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        zrealTable = new javax.swing.JTable();
         jLabel19 = new javax.swing.JLabel();
         roboczePanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -63,7 +62,7 @@ public class MainWindow extends javax.swing.JFrame {
         repertoriumPanel = new javax.swing.JTabbedPane();
         zrealPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        zrealTable = new javax.swing.JTable();
+        zrealTable213 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
@@ -245,50 +244,23 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(194, 186, 255));
         jPanel4.setPreferredSize(new java.awt.Dimension(950, 650));
 
-        roboczeTable2.setModel(new javax.swing.table.DefaultTableModel(
+        zrealTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id robocze aktu", "Strony", "Krótki opis", "Kwota bruttol"
+                "Numer aktu", "Numer repertorium", "Strony czynności", "Opis czynności", "Kwota brutto"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane5.setViewportView(roboczeTable2);
-        if (roboczeTable2.getColumnModel().getColumnCount() > 0) {
-            roboczeTable2.getColumnModel().getColumn(0).setMinWidth(100);
-            roboczeTable2.getColumnModel().getColumn(0).setMaxWidth(100);
-            roboczeTable2.getColumnModel().getColumn(1).setPreferredWidth(50);
-            roboczeTable2.getColumnModel().getColumn(2).setPreferredWidth(30);
-            roboczeTable2.getColumnModel().getColumn(3).setMinWidth(100);
-        }
-
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/trash-bin.png"))); // NOI18N
-        jLabel17.setToolTipText("");
-        jLabel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel17MouseClicked(evt);
-            }
-        });
-
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/update-arrow.png"))); // NOI18N
-        jLabel18.setToolTipText("");
-        jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel18MouseClicked(evt);
-            }
-        });
+        jScrollPane5.setViewportView(zrealTable);
 
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/add.png"))); // NOI18N
@@ -307,11 +279,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(732, Short.MAX_VALUE))
+                .addContainerGap(851, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
@@ -321,10 +289,7 @@ public class MainWindow extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(586, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -338,8 +303,8 @@ public class MainWindow extends javax.swing.JFrame {
         zrealizowanePanelLayout.setHorizontalGroup(
             zrealizowanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, zrealizowanePanelLayout.createSequentialGroup()
-                .addGap(0, 14, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
         );
         zrealizowanePanelLayout.setVerticalGroup(
             zrealizowanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,13 +353,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(roboczeTable);
-        if (roboczeTable.getColumnModel().getColumnCount() > 0) {
-            roboczeTable.getColumnModel().getColumn(0).setMinWidth(100);
-            roboczeTable.getColumnModel().getColumn(0).setMaxWidth(100);
-            roboczeTable.getColumnModel().getColumn(1).setPreferredWidth(50);
-            roboczeTable.getColumnModel().getColumn(2).setPreferredWidth(30);
-            roboczeTable.getColumnModel().getColumn(3).setMinWidth(100);
-        }
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/trash-bin.png"))); // NOI18N
@@ -465,7 +423,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(576, Short.MAX_VALUE))
+                .addContainerGap(573, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(69, 69, 69)
@@ -484,8 +442,8 @@ public class MainWindow extends javax.swing.JFrame {
         roboczePanelLayout.setVerticalGroup(
             roboczePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roboczePanelLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         klienciPanel.setBackground(new java.awt.Color(172, 216, 183));
@@ -515,13 +473,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jScrollPane6.setViewportView(klienciTable);
-        if (klienciTable.getColumnModel().getColumnCount() > 0) {
-            klienciTable.getColumnModel().getColumn(0).setMinWidth(100);
-            klienciTable.getColumnModel().getColumn(0).setMaxWidth(100);
-            klienciTable.getColumnModel().getColumn(1).setPreferredWidth(50);
-            klienciTable.getColumnModel().getColumn(2).setPreferredWidth(30);
-            klienciTable.getColumnModel().getColumn(3).setMinWidth(100);
-        }
 
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -556,7 +507,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -564,7 +515,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         zrealPanel.setBackground(new java.awt.Color(153, 255, 102));
 
-        zrealTable.setModel(new javax.swing.table.DefaultTableModel(
+        zrealTable213.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -572,16 +523,16 @@ public class MainWindow extends javax.swing.JFrame {
                 "Numer repertorium", "Numer aktu", "Strony", "Krótki opis", "Kwota bruttol"
             }
         ));
-        jScrollPane2.setViewportView(zrealTable);
-        if (zrealTable.getColumnModel().getColumnCount() > 0) {
-            zrealTable.getColumnModel().getColumn(0).setMinWidth(100);
-            zrealTable.getColumnModel().getColumn(0).setMaxWidth(100);
-            zrealTable.getColumnModel().getColumn(1).setMinWidth(100);
-            zrealTable.getColumnModel().getColumn(1).setMaxWidth(100);
-            zrealTable.getColumnModel().getColumn(2).setPreferredWidth(50);
-            zrealTable.getColumnModel().getColumn(3).setPreferredWidth(50);
-            zrealTable.getColumnModel().getColumn(4).setMinWidth(100);
-            zrealTable.getColumnModel().getColumn(4).setMaxWidth(100);
+        jScrollPane2.setViewportView(zrealTable213);
+        if (zrealTable213.getColumnModel().getColumnCount() > 0) {
+            zrealTable213.getColumnModel().getColumn(0).setMinWidth(100);
+            zrealTable213.getColumnModel().getColumn(0).setMaxWidth(100);
+            zrealTable213.getColumnModel().getColumn(1).setMinWidth(100);
+            zrealTable213.getColumnModel().getColumn(1).setMaxWidth(100);
+            zrealTable213.getColumnModel().getColumn(2).setPreferredWidth(50);
+            zrealTable213.getColumnModel().getColumn(3).setPreferredWidth(50);
+            zrealTable213.getColumnModel().getColumn(4).setMinWidth(100);
+            zrealTable213.getColumnModel().getColumn(4).setMaxWidth(100);
         }
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -627,12 +578,12 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(zrealPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(573, Short.MAX_VALUE))
+                .addContainerGap(566, Short.MAX_VALUE))
             .addGroup(zrealPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(zrealPanelLayout.createSequentialGroup()
                     .addGap(58, 58, 58)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(54, Short.MAX_VALUE)))
+                    .addContainerGap(47, Short.MAX_VALUE)))
         );
 
         repertoriumPanel.addTab("Zrealizowane", zrealPanel);
@@ -786,20 +737,15 @@ public class MainWindow extends javax.swing.JFrame {
         AddRep.pack(); //IDKWhy
 
         AddRep.idAktu = idAkt;
+        akt.insertOplaty(idAkt);
 
 
     }//GEN-LAST:event_jLabel12MouseClicked
 
-    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel17MouseClicked
-
-    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel18MouseClicked
-
     private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
-        // TODO add your handling code here:
+        // dodawanie w repertorium
+        jLabel12MouseClicked(evt);
+        
     }//GEN-LAST:event_jLabel19MouseClicked
 
     private void zrealizowanePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_zrealizowanePanelMouseClicked
@@ -877,8 +823,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -904,10 +848,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel roboczeButton;
     private javax.swing.JPanel roboczePanel;
     private javax.swing.JTable roboczeTable;
-    private javax.swing.JTable roboczeTable2;
     private javax.swing.JPanel sidebar;
     private javax.swing.JPanel zrealPanel;
     private javax.swing.JTable zrealTable;
+    private javax.swing.JTable zrealTable213;
     private javax.swing.JPanel zrealizowanePanel;
     // End of variables declaration//GEN-END:variables
 }

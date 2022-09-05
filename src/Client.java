@@ -168,11 +168,11 @@ public class Client {
         }
     }
 
-    public void deleteKlientDoAkt(int klient, int idAktu ) {
+    public void deleteKlientDoAkt(int klient, int idAktu) {
         //usuniecie klienta z aktu
         Connection con = MyConnection.getConnection();
         PreparedStatement ps;
-        
+
         try {
             ps = con.prepareStatement("DELETE FROM `klient_do_akt` WHERE `klient_id`= ? and `akt_id`= ?;");
             ps.setInt(1, klient);
